@@ -7,7 +7,9 @@ import booksRoute from './routes/booksRoute.js';
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: 'https://my-book-store-app-nj76.vercel.app', 
+}));
 app.use('/books', booksRoute);
 
 mongoose
