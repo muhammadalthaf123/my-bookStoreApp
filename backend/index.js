@@ -1,19 +1,20 @@
 import express from 'express';
-import { PORT, mongoDBURL } from './config.js';
-import mongoose from 'mongoose';
 import cors from 'cors';
+import mongoose from 'mongoose';
+import { PORT, mongoDBURL } from './config.js';
 import booksRoute from './routes/booksRoute.js';
 
 const app = express();
 
+
+app.use(cors());
+
+
 app.use(express.json());
-app.use(cors({
-  origin: 'https://my-book-store-app-nj76.vercel.app', 
-}));
 app.use('/books', booksRoute);
 
 mongoose
-  .connect(mongoDBURL) 
+  .connect(mongoDBURL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log("App connected to database");
     app.listen(PORT, () => {
